@@ -1,6 +1,6 @@
 # Roteiro — Falhas famosas
 
-> Recriação (sem áudio, por enquanto) do vídeo **"Famous Failures"**, do
+> Recriação (sem narração, por enquanto) do vídeo **"Famous Failures"**, do
 > canal RubixSpark (YouTube). O conteúdo foi traduzido para o português.
 
 ## Ideia
@@ -13,7 +13,7 @@ até o sucesso.
 
 1. **Abertura** — título "Falhas famosas".
 2. **11 pessoas** — cada cena mostra a falha e, depois de alguns segundos,
-   revela o nome.
+   revela o nome e a foto (sem fundo) da pessoa.
 3. **Frase final** — encerramento.
 
 ## Pessoas (falha → nome)
@@ -42,11 +42,34 @@ até o sucesso.
 
 ## Créditos
 
-A trilha de fundo é CC-BY 4.0 — o crédito abaixo **precisa** ir na
-descrição do vídeo no YouTube:
+### Trilha de fundo
+
+CC-BY 4.0 — este crédito **precisa** ir na descrição do vídeo no YouTube:
 
 ```
 "Inspired" by Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
 ```
+
+### Fotos
+
+Todas vêm do Wikimedia Commons, com o fundo removido. 10 estão em
+domínio público ou CC0 — não exigem crédito. A única exceção:
+
+- **Steve Jobs** — foto de Matthew Yohe (CC BY-SA 3.0). Crédito sugerido
+  na descrição: `Steve Jobs photo by Matthew Yohe, CC BY-SA 3.0`.
+
+| Pessoa | Licença | Autor |
+| --- | --- | --- |
+| Michael Jordan | Domínio público | D. Myles Cullen (DoD) |
+| Albert Einstein | Domínio público | Orren Jack Turner |
+| Oprah Winfrey | Domínio público | US Embassy South Africa |
+| Walt Disney | Domínio público | Boy Scouts of America |
+| Lionel Messi | Domínio público | The White House |
+| Steve Jobs | CC BY-SA 3.0 | Matthew Yohe |
+| Eminem | CC0 | Brendan Linden |
+| Thomas Edison | Domínio público | Louis Bachrach |
+| The Beatles | Domínio público | Dezo Hoffmann / Capitol Records |
+| Dr. Seuss | Domínio público | Al Ravenna |
+| Abraham Lincoln | Domínio público | Alexander Gardner |

@@ -51,6 +51,7 @@ export const FamousFailures: React.FC = () => {
           <PersonScene
             name={entry.name}
             failure={entry.failure}
+            photo={entry.photo}
             durationInFrames={PERSON_DURATION}
           />
         </Sequence>
