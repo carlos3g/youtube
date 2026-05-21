@@ -14,6 +14,9 @@ node_modules/
 out/
 *.mp4
 
+# Mockups do brainstorming (visual companion)
+.superpowers/
+
 # Sistema / logs
 .DS_Store
 *.log
