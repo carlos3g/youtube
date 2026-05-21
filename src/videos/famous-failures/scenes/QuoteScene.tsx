@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  AbsoluteFill,
-  Easing,
-  interpolate,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
 import { COLORS } from "../../../shared/constants";
 import { fontFamily } from "../../../shared/font";
 import { ENDING_QUOTE } from "../data";
@@ -14,22 +8,53 @@ type QuoteSceneProps = {
   durationInFrames: number;
 };
 
-// Cena final: a frase de efeito que fecha o vídeo.
+const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
+
+// Cena final: a frase de efeito que fecha o vídeo, revelada em dois
+// tempos com push-in lento. O fechamento das barras de letterbox
+// ("iris out") é feito pelo FilmLayer.
 export const QuoteScene: React.FC<QuoteSceneProps> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
 
-  const enter = interpolate(frame, [0, 1.2 * fps], [0, 1], {
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  // A frase é dividida em duas partes pela vírgula, para revelar em dois tempos.
+  const [partA, partB] = ENDING_QUOTE.split(", ");
+
+  const reveal = (start: number, end: number) =>
+    interpolate(frame, [start, end], [0, 1], {
+      easing: EASE_OUT,
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+
+  const rule = reveal(0, 18);
+  const lineA = reveal(10, 38);
+  const lineB = reveal(34, 64);
+
+  // Push-in lento da "câmera".
+  const pushIn = interpolate(frame, [0, 140], [1.05, 1], {
+    easing: Easing.out(Easing.ease),
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
+
   const exit = interpolate(
     frame,
     [durationInFrames - 30, durationInFrames],
     [1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
+
+  const lineStyle: React.CSSProperties = {
+    fontFamily,
+    fontStyle: "italic",
+    fontSize: 84,
+    fontWeight: 400,
+    lineHeight: 1.32,
+    color: COLORS.text,
+    textAlign: "center",
+    margin: 0,
+    maxWidth: 1500,
+  };
 
   return (
     <AbsoluteFill
@@ -38,6 +63,7 @@ export const QuoteScene: React.FC<QuoteSceneProps> = ({ durationInFrames }) => {
         justifyContent: "center",
         alignItems: "center",
         padding: "0 220px",
+        transform: `scale(${pushIn})`,
       }}
     >
       {/* Filete decorativo */}
@@ -48,28 +74,29 @@ export const QuoteScene: React.FC<QuoteSceneProps> = ({ durationInFrames }) => {
           marginBottom: 56,
           borderRadius: 2,
           background: COLORS.accent,
-          opacity: enter,
-          transform: `scaleX(${enter})`,
+          opacity: rule,
+          transform: `scaleX(${rule})`,
         }}
       />
 
-      {/* Frase final */}
+      {/* Frase final, revelada em dois tempos */}
       <p
         style={{
-          fontFamily,
-          fontStyle: "italic",
-          fontSize: 84,
-          fontWeight: 400,
-          lineHeight: 1.32,
-          color: COLORS.text,
-          textAlign: "center",
-          margin: 0,
-          maxWidth: 1500,
-          opacity: enter,
-          transform: `translateY(${interpolate(enter, [0, 1], [30, 0])}px)`,
+          ...lineStyle,
+          opacity: lineA,
+          transform: `translateY(${interpolate(lineA, [0, 1], [28, 0])}px)`,
         }}
       >
-        {`“${ENDING_QUOTE}”`}
+        {`"${partA},`}
+      </p>
+      <p
+        style={{
+          ...lineStyle,
+          opacity: lineB,
+          transform: `translateY(${interpolate(lineB, [0, 1], [28, 0])}px)`,
+        }}
+      >
+        {`${partB}"`}
       </p>
     </AbsoluteFill>
   );
