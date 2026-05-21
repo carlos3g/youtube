@@ -12,6 +12,7 @@ import {
 } from "remotion";
 import { COLORS } from "../../../shared/constants";
 import { fontFamily } from "../../../shared/font";
+import { useKenBurns } from "../../../shared/hooks/useKenBurns";
 import type { Fact as FactType } from "../data";
 import { Fact } from "./Fact";
 
@@ -34,6 +35,14 @@ export const PersonScene: React.FC<PersonSceneProps> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+
+  // Movimento de câmera lento aplicado à foto ao longo de toda a cena.
+  const ken = useKenBurns({
+    durationInFrames,
+    fromScale: 1,
+    toScale: 1.05,
+    driftY: -20,
+  });
 
   // Entrada do texto da falha.
   const enter = interpolate(frame, [0, fps], [0, 1], {
@@ -68,11 +77,30 @@ export const PersonScene: React.FC<PersonSceneProps> = ({
       },
     );
 
-  // Saída da cena inteira.
+  // Deriva lenta do texto da falha enquanto ele está em cena.
+  const failureDrift = interpolate(frame, [0, revealAt], [0, -18], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Saída da cena inteira (opacidade).
   const exit = interpolate(
     frame,
     [durationInFrames - 22, durationInFrames],
     [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+
+  // Transição: a cena entra avançando de leve e sai recuando de leve.
+  const enterScale = interpolate(frame, [0, fps], [1.03, 1], {
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const exitScale = interpolate(
+    frame,
+    [durationInFrames - 22, durationInFrames],
+    [1, 0.98],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
 
@@ -95,7 +123,12 @@ export const PersonScene: React.FC<PersonSceneProps> = ({
         <Audio src={staticFile("sfx/whoosh.wav")} volume={0.6} />
       </Sequence>
 
-      <AbsoluteFill style={{ opacity: exit }}>
+      <AbsoluteFill
+        style={{
+          opacity: exit,
+          transform: `scale(${enterScale * exitScale})`,
+        }}
+      >
         {/* Falha — centralizada; ao revelar, encolhe e sobe. */}
         <AbsoluteFill
           style={{
@@ -120,7 +153,9 @@ export const PersonScene: React.FC<PersonSceneProps> = ({
               textAlign: "center",
               margin: 0,
               maxWidth: 1400,
-              transform: `translateY(${interpolate(enter, [0, 1], [30, 0])}px)`,
+              transform: `translateY(${
+                interpolate(enter, [0, 1], [30, 0]) + failureDrift
+              }px)`,
             }}
           >
             {failure}
@@ -163,11 +198,9 @@ export const PersonScene: React.FC<PersonSceneProps> = ({
                   "linear-gradient(to bottom, #000 70%, transparent 100%)",
                 maskImage:
                   "linear-gradient(to bottom, #000 70%, transparent 100%)",
-                transform: `translateY(${interpolate(
-                  pop,
-                  [0, 1],
-                  [36, 0],
-                )}px) scale(${interpolate(pop, [0, 1], [0.94, 1])})`,
+                transform: `translateY(${
+                  interpolate(pop, [0, 1], [36, 0]) + ken.y
+                }px) scale(${interpolate(pop, [0, 1], [0.94, 1]) * ken.scale})`,
               }}
             />
 
