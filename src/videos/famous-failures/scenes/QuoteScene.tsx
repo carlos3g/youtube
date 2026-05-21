@@ -87,7 +87,7 @@ export const QuoteScene: React.FC<QuoteSceneProps> = ({ durationInFrames }) => {
           transform: `translateY(${interpolate(lineA, [0, 1], [28, 0])}px)`,
         }}
       >
-        {`"${partA},`}
+        {`“${partA},`}
       </p>
       <p
         style={{
@@ -96,7 +96,7 @@ export const QuoteScene: React.FC<QuoteSceneProps> = ({ durationInFrames }) => {
           transform: `translateY(${interpolate(lineB, [0, 1], [28, 0])}px)`,
         }}
       >
-        {`${partB}"`}
+        {`${partB}”`}
       </p>
     </AbsoluteFill>
   );
