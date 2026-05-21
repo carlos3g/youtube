@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import { SiteCredit } from "../../../shared/components/SiteCredit";
 import { COLORS } from "../../../shared/constants";
 import { fontFamily } from "../../../shared/font";
 
@@ -64,43 +65,48 @@ export const IntroScene: React.FC<IntroSceneProps> = ({ durationInFrames }) => {
   };
 
   return (
-    <AbsoluteFill
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        opacity: fadeOut,
-        transform: `scale(${pushIn * exitScale})`,
-      }}
-    >
-      <h1
+    <>
+      <AbsoluteFill
         style={{
-          ...wordStyle,
-          opacity: w1,
-          transform: `translateY(${interpolate(w1, [0, 1], [28, 0])}px)`,
+          justifyContent: "center",
+          alignItems: "center",
+          opacity: fadeOut,
+          transform: `scale(${pushIn * exitScale})`,
         }}
       >
-        Falhas
-      </h1>
-      <h1
-        style={{
-          ...wordStyle,
-          opacity: w2,
-          transform: `translateY(${interpolate(w2, [0, 1], [28, 0])}px)`,
-        }}
-      >
-        famosas
-      </h1>
-      <div
-        style={{
-          width: 84,
-          height: 3,
-          marginTop: 30,
-          borderRadius: 2,
-          background: COLORS.accent,
-          opacity: rule,
-          transform: `scaleX(${rule})`,
-        }}
-      />
-    </AbsoluteFill>
+        <h1
+          style={{
+            ...wordStyle,
+            opacity: w1,
+            transform: `translateY(${interpolate(w1, [0, 1], [28, 0])}px)`,
+          }}
+        >
+          Falhas
+        </h1>
+        <h1
+          style={{
+            ...wordStyle,
+            opacity: w2,
+            transform: `translateY(${interpolate(w2, [0, 1], [28, 0])}px)`,
+          }}
+        >
+          famosas
+        </h1>
+        <div
+          style={{
+            width: 84,
+            height: 3,
+            marginTop: 30,
+            borderRadius: 2,
+            background: COLORS.accent,
+            opacity: rule,
+            transform: `scaleX(${rule})`,
+          }}
+        />
+      </AbsoluteFill>
+
+      {/* Crédito do autor — camada própria, fora do push-in da câmera. */}
+      <SiteCredit durationInFrames={durationInFrames} />
+    </>
   );
 };

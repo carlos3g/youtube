@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
+import { SiteCredit } from "../../../shared/components/SiteCredit";
 import { COLORS } from "../../../shared/constants";
 import { fontFamily } from "../../../shared/font";
 import { ENDING_QUOTE } from "../data";
@@ -57,47 +58,52 @@ export const QuoteScene: React.FC<QuoteSceneProps> = ({ durationInFrames }) => {
   };
 
   return (
-    <AbsoluteFill
-      style={{
-        opacity: exit,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "0 220px",
-        transform: `scale(${pushIn})`,
-      }}
-    >
-      {/* Filete decorativo */}
-      <div
+    <>
+      <AbsoluteFill
         style={{
-          width: 70,
-          height: 3,
-          marginBottom: 56,
-          borderRadius: 2,
-          background: COLORS.accent,
-          opacity: rule,
-          transform: `scaleX(${rule})`,
+          opacity: exit,
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0 220px",
+          transform: `scale(${pushIn})`,
         }}
-      />
+      >
+        {/* Filete decorativo */}
+        <div
+          style={{
+            width: 70,
+            height: 3,
+            marginBottom: 56,
+            borderRadius: 2,
+            background: COLORS.accent,
+            opacity: rule,
+            transform: `scaleX(${rule})`,
+          }}
+        />
 
-      {/* Frase final, revelada em dois tempos */}
-      <p
-        style={{
-          ...lineStyle,
-          opacity: lineA,
-          transform: `translateY(${interpolate(lineA, [0, 1], [28, 0])}px)`,
-        }}
-      >
-        {`“${partA},`}
-      </p>
-      <p
-        style={{
-          ...lineStyle,
-          opacity: lineB,
-          transform: `translateY(${interpolate(lineB, [0, 1], [28, 0])}px)`,
-        }}
-      >
-        {`${partB}”`}
-      </p>
-    </AbsoluteFill>
+        {/* Frase final, revelada em dois tempos */}
+        <p
+          style={{
+            ...lineStyle,
+            opacity: lineA,
+            transform: `translateY(${interpolate(lineA, [0, 1], [28, 0])}px)`,
+          }}
+        >
+          {`“${partA},`}
+        </p>
+        <p
+          style={{
+            ...lineStyle,
+            opacity: lineB,
+            transform: `translateY(${interpolate(lineB, [0, 1], [28, 0])}px)`,
+          }}
+        >
+          {`${partB}”`}
+        </p>
+      </AbsoluteFill>
+
+      {/* Crédito do autor — camada própria, fora do push-in da câmera. */}
+      <SiteCredit durationInFrames={durationInFrames} />
+    </>
   );
 };
