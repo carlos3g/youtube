@@ -13,7 +13,8 @@ até o sucesso.
 
 1. **Abertura** — título "Falhas famosas".
 2. **11 pessoas** — cada cena mostra a falha e, depois de alguns segundos,
-   revela o nome e a foto (sem fundo) da pessoa.
+   revela o nome, a foto (sem fundo) e 4 conquistas (ícone + texto) da
+   pessoa nas laterais.
 3. **Frase final** — encerramento.
 
 ## Pessoas (falha → nome)

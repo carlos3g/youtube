@@ -10,5 +10,6 @@ export const COLORS = {
   background: "#0B0D12",
   backgroundGradient: "#161C2B",
   text: "#F5F6F8",
+  muted: "#A9ADB8",
   accent: "#E0322D",
 } as const;

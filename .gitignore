@@ -10,8 +10,9 @@ node_modules/
 !.yarn/versions
 .pnp.*
 
-# Saída das renderizações
+# Saída das renderizações (vídeos renderizados nunca vão para o repositório)
 out/
+*.mp4
 
 # Sistema / logs
 .DS_Store
